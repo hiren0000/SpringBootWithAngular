@@ -22,23 +22,45 @@ public class UserServiceImpl implements UserService
         return newUser;
     }
 
+    //get all list of users
     @Override
     public List<User> getALlUsers() {
-        return null;
+
+        List<User> users = this.userRepo.findAll();
+
+        return users;
     }
 
+    //getting user by id
     @Override
-    public User getById(Integer id) {
-        return null;
+    public User getById(Integer id)
+    {
+        User user = this.userRepo.findById(id).get();
+        return user;
     }
 
+    //updating user
     @Override
-    public User updateUser(User user, Integer id) {
-        return null;
+    public User updateUser(User user, Integer id)
+    {
+        User user1 = this.userRepo.findById(id).get();
+        user1.setName(user.getName());
+        user1.setPassword(user.getPassword());
+        user1.setEmail(user.getEmail());
+        user1.setAbout(user.getAbout());
+
+        //updating user
+        User updatedUser = this.userRepo.save(user1);
+
+        return updatedUser;
     }
 
+    //deleting user
     @Override
     public void deleteById(Integer id) {
 
+        User user1 = this.userRepo.findById(id).get();
+
+        this.userRepo.delete(user1);
     }
 }
